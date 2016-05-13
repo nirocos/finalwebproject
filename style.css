@@ -1,3 +1,6 @@
 .clearnone{
 	clear:none !important;
 }
+.child-dropdown{
+	padding:3px 10px !important;
+}
