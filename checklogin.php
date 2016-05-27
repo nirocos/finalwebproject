@@ -1,5 +1,5 @@
 <?php 
-	session_start();
+	
 		$error = $username = $password = "";
 		$blank = 0;
 		$checkuser = 0;

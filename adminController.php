@@ -24,7 +24,7 @@
 <div class="tab-content">
 <div id="a"class="tab-pane fade in active">
 		<div class="container"  id="form_newProduct">
-				<form action="adminController.php" method="post" enctype="multipart/form-data">
+				<form action="adminController.php" method="post" enctype="multipart/form-data" id="addproduct">
 						<div class="col-md-6 text-newproduct">
 						<div class="form-group">
 						<label for="productname" class="col-md-3 h4">Name : </label>
@@ -44,8 +44,9 @@
 										<div class="clearfix"></div>
 										<label class="">Upload Picture Product</label>
 										<input type="file" class="" id="files" name="image">
-
+						 <input id="reset" type="button" value="Reset" class="btn btn-primary margintop5p  ">
 						 <button type="submit" name="submit" class="btn btn-dark margintop5p buttonsubmit">SUBMIT</button>
+
 						</div>
 						</div>
 				</form>
@@ -105,6 +106,7 @@
 
  	<?php include 'script.php' ?>
  	<script>
+
  		document.getElementById("files").onchange = function () {
     var input = event.target;
 
@@ -115,11 +117,10 @@
       output.src = dataURL;
     };
     reader.readAsDataURL(input.files[0]);
-    };
+  };
 
-    // read the image file as a data URL.
-    reader.readAsDataURL(this.files[0]);
- 	</script>
+ 
+   	</script>
  	
  </body>
- </html>
+ </html>  	

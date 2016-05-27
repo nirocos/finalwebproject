@@ -1,11 +1,13 @@
 <?php 
+session_start();
 	include 'config.php';
 	include'checklogin.php';
 	include 'showProduct.php';
 	include 'showPic.php';
-	include 'script.php'; 
+	
 	include 'addcart.php';
 	include 'forgetpasswordC.php';
+	include 'deletecart.php';
  ?>
  <!DOCTYPE html>
  <html lang="en">
@@ -23,22 +25,22 @@
 			<form action="index.php" method="POST">
 				<div class="form-group">
 					
-					 <select id="products" class="col-md-10 col-md-offset-1 h3" name="selectProduct" onchange="showUser(this.value)"> 
+					 <select id="products" class="col-md-10 col-md-offset-1 h3" name="selectProduct" onchange="showProduct(this.value)"> 
 					<?php
 
 						if ($result->num_rows > 0) {	
 							while($row = $result -> fetch_assoc()){
 					?>
-						<option value="<?php echo $row['productID']."-".$row['productPrice']?>" ><?php echo $row['productName'] ?></option>
+						<option value="<?php echo $row['productPrice']."-".$row['productName']."-".$row['productID']."-".$row['productPic'].""?>"><?php echo $row['productName'] ?></option>
+
 						<?php }} ?>
 						
 					</select> 
 				</div>
 				</div>
-				<div class="row margintop5p col-md-10 col-md-offset-1">
+				<div class="col-md-10 col-md-offset-1 ">
 				<label for="quantity"class=" pull-left margintop5 nomarginbottom marginright">QUANTITY</label>
 				<input type="number" name="amout" id="" min="1" class="text-center col-md-5" value="1">
-				
 				</div>
 				<?php 
 					$query = "SELECT * FROM product ORDER BY productID DESC";
@@ -48,12 +50,12 @@
 				<div class="clearfix"></div>
 				<div  class="margintop5p">
 				
-					<h4 class="col-md-8"><div id="txtHint" >Cost : <?php echo $row["productPrice"] ?> bath</div></h4>
+					<h4 class="col-md-8"><div id="txtHint" >Cost : <?php echo number_format($row["productPrice"]) ?> bath</div></h4>
 					
 					<?php if(isset($_SESSION['username'])&&$_SESSION['status']=="user"): ?>
 					<input type="hidden" name="username" value="<?php echo $_SESSION['username']; ?>">
 				
-					<input type="submit" name="addcart" value="Add to cart" class="col-md-4 btn btn-warning ">
+					<input type="submit" name="addcart" value="Add to cart" class="col-md-4 btn buttonsubmit btn-dark">
 					<?php endif; ?>
     				
 				</div>
@@ -71,17 +73,21 @@
 					<th>ITEM PRICE</th>
 				</tr>
 				<?php
-					$query = "SELECT *FROM product ORDER BY productID ASC";
+					if(isset($_SESSION['username'])){
+					$username = $_SESSION['username'];
+					$query = "SELECT orderID , productName , amout ,(productPrice * amout) AS sumproductPrice FROM addcart WHERE username = '$username' ORDER BY orderID DESC";
 					$result = $connection->query($query);
 
 					if ($result->num_rows > 0) {	
 						while($row = $result -> fetch_assoc()){
 					?>
 				<tr class="cart">
-					<td></td>
-					<td></td>
-					<td></td>
+					<td><div class="text-center"><?php echo $row["productName"] ?></div></td>
+					<td><div class="text-center"><?php echo $row["amout"] ?></div></td>
+					<td><div class="text-center"><?php echo number_format($row["sumproductPrice"]) ?></div></td>
+					<td><div class="text-center"><a href="index.php?deleteproduct=<?php echo $row["orderID"]; ?>">DELETE</a></div></td>
 				</tr>
+			<?php }}} ?>
 			</table>
 				<div class="form-group margintop10">	
 				<input type="radio" name="address" value="oldaddress" class="col-md-2">ORIGINAL ADDRESS<br>
@@ -113,7 +119,7 @@
 			while($row = $result -> fetch_assoc()){
 					echo '
 					<div class="col-xs-6 col-md-3">
-    			<a  href="index.php?selectPic='.$row["productID"].'" class="thumbnail">
+    			<a onclick="swap(this,\''.$row['productPrice']."-".$row['productName']."-".$row['productID']."-".$row['productPic'].'\'); return false;" href="photos/'.$row["productPic"].'" class="thumbnail picA" >
      			 <img src="photos/'.$row["productPic"].'"/>
     			</a>
   			</div> 
@@ -124,10 +130,7 @@
 	</div>
 
 
-
-
-
-
+	<?php include 'script.php';  ?>
 	
  	<?php 
  			if ($checkuser==1||$blank==1) {

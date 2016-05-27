@@ -10,9 +10,14 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 <link rel="stylesheet" href="style.css">
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script>
-       function showUser(str) {
-       	
+	<script type="text/javascript">
+       
+    function showProduct(value){
+
+       showPrice(value);
+       showPic(value);
+    }
+     function showPrice(str) {
     if (str == "") {
     	
     		  document.getElementById("txtHint").innerHTML = "";
@@ -35,6 +40,35 @@
         xmlhttp.send();
     }
 }
+    function showPic(value){
+        var a = value.split("-")[0];
+        var b = value.split("-")[1];
+        var c = value.split("-")[2];
+        var d = value.split("-")[3];
+         var img = document.getElementById('imgshowproduct');
+         img.src = "photos/"+d;
+    }
+    function swap(picT,a){
+
+        var lpic = document.getElementById("imgshowproduct");
+        var selectProduct = document.getElementById("products");
+        var productPrice = document.getElementById("txtHint");
+        lpic.src = picT.href;
+        var price = a.split("-")[0];
+        selectProduct.value = a;
+        
+        productPrice.innerHTML = "Cost : "+ numberWithCommas(price)+" bath";
+    
+        
+       
+    }
+    function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+     
+    
+         
+   
 	</script>
        
  </head>
