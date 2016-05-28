@@ -7,9 +7,9 @@ session_start();
 			$query = "SELECT * FROM product WHERE productID = '$editproductID'";
 			$result = $connection->query($query);
 
-		if ($result->num_rows > 0) {	
-			$row = $result -> fetch_assoc();
-		}
+			if ($result->num_rows > 0) {	
+				$row = $result -> fetch_assoc();
+			}
 		}
 
  ?>
@@ -45,7 +45,7 @@ session_start();
 										<div class="clearfix"></div>
 										<label class="">Upload Picture Product</label>
 										<input type="file" class="" id="files" name="editimage">
-
+					
 						 <button type="submit" name="editsubmit" class="btn btn-dark margintop5p buttonsubmit">SUBMIT</button>
 						</div>
 						</div>

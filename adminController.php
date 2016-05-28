@@ -55,7 +55,7 @@
 		</div>
 
 	 <?php 
-			$query = "SELECT productID , productName , productPrice FROM product ORDER BY productID ASC";
+			$query = "SELECT * FROM product ORDER BY productID ASC";
 			$result = $connection->query($query);
 
 	 ?>
@@ -79,19 +79,21 @@
 
 						
 					?>
+
 					<tr>
 					
 						<td><div class="text-center"><?php echo $row["productName"] ?></div></td>
 						<td><div class="text-center"><?php echo $row["productPrice"] ?></div></td>
 						<td><div class="text-center"><a href="editProduct.php?editproductID=<?php echo $row["productID"]; ?>">Edit</a></div></td>
-						<td><div class="text-center"><a href="adminController.php?deleteproductID=<?php echo $row["productID"]; ?>">Delete</a></div></td>
+						<td><div class="text-center"><?php echo '<a href="adminController.php?deleteproductID='.$row["productID"].'&deleteImg='.$row["productPic"].'">Delete</a>'; ?></div></td>
+
 					</tr>
 					<?php 
 						}
 						}
 					 ?>
 				</table>
-
+				
 			</div>
 	</div>
 	

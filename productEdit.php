@@ -14,17 +14,20 @@
 				productName = '$productname', 
 				productPrice = '$productprice' WHERE productID = '$editproductID'";
 			$result =$connection->query($query);
-			if($image_name != "")
+			if(isset($image_name))
 			 {
 				if(move_uploaded_file($image_tmp_name, "photos/$image_name")){
+					if(isset($_POST['hdnOldFile'])){
+						@unlink("photos/".$_POST["hdnOldFile"]);
+					}
 
+					$query = "UPDATE product SET 
+					productPic = '$image_name'
+					WHERE productID = '$editproductID'";
+
+					$result =$connection->query($query);
+					
 				}
-				@unlink("photos/".$_POST["hdnOldFile"]);
-				$query = "UPDATE product SET 
-				productPic = '$image_name'
-				WHERE productID = '$editproductID'";
-
-				$result =$connection->query($query);
 				
 				
 			}

@@ -8,7 +8,7 @@
 			$image_type = $_FILES['image']['type'];
 			$image_size = $_FILES['image']['size'];
 			$image_tmp_name = $_FILES['image']['tmp_name'];
-		if($image_name==''){
+		if($image_name ==''){
 			echo "<script>alert('Please Select an Image')</script>";
 		}		
 			else {
