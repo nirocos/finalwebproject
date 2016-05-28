@@ -10,7 +10,7 @@
 						 <li class="col-xs-9 col-md-8 noPadding text-right "><a class="toolbarText" href="#contactus">CONTACT US</a></li>
 						 
 						<?php  if(isset($_SESSION['username'])): ?>
-						 <li class="dropdown">
+						 <li class="dropdown col-md-4">
           					<a href="#" class="dropdown-toggle toolbarText" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> 
           						<i class="fa fa-user" aria-hidden="true"></i><?php echo " ".$_SESSION['username']; ?> <span class="caret"></span>
           					</a>

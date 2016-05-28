@@ -38,9 +38,9 @@ session_start();
 					</select> 
 				</div>
 				</div>
-				<div class="col-md-10 col-md-offset-1 ">
-				<label for="quantity"class=" pull-left margintop5 nomarginbottom marginright">QUANTITY</label>
-				<input type="number" name="amout" id="" min="1" class="text-center col-md-5" value="1">
+				<div class="col-md-10 margintop5p ">
+				<label for="quantity"class=" col-md-4 margintop5 nomarginbottom">QUANTITY</label>
+				<input type="number" name="amout" id="" min="1" class="text-center col-md-7" value="1">
 				</div>
 				<?php 
 					$query = "SELECT * FROM product ORDER BY productID DESC";
@@ -75,27 +75,58 @@ session_start();
 				<?php
 					if(isset($_SESSION['username'])){
 					$username = $_SESSION['username'];
-					$query = "SELECT orderID , productName , amout ,(productPrice * amout) AS sumproductPrice FROM addcart WHERE username = '$username' ORDER BY orderID DESC";
+					$query = "SELECT * FROM addcart WHERE username = '$username' ORDER BY orderID DESC";
 					$result = $connection->query($query);
 
 					if ($result->num_rows > 0) {	
 						while($row = $result -> fetch_assoc()){
 					?>
 				<tr class="cart">
-					<td><div class="text-center"><?php echo $row["productName"] ?></div></td>
-					<td><div class="text-center"><?php echo $row["amout"] ?></div></td>
-					<td><div class="text-center"><?php echo number_format($row["sumproductPrice"]) ?></div></td>
+					<td><div class="text-center"><?php echo $row["productName"]; ?></div></td>
+					<td><div class="text-center"><?php echo $row["amout"]; ?></div></td>
+					<td><div class="text-center"><?php echo number_format($row["totalprice"]); ?></div></td>
 					<td><div class="text-center"><a href="index.php?deleteproduct=<?php echo $row["orderID"]; ?>">DELETE</a></div></td>
 				</tr>
+
 			<?php }}} ?>
 			</table>
-				<div class="form-group margintop10">	
-				<input type="radio" name="address" value="oldaddress" class="col-md-2">ORIGINAL ADDRESS<br>
+			<?php 
+					if(isset($_SESSION['username'])){
+					$username = $_SESSION['username'];
+					$query = "SELECT SUM(totalprice) AS TotalPrice FROM addcart WHERE username = '$username'";
+					$result = $connection->query($query);
+					if ($result->num_rows > 0) {
+					$row = $result -> fetch_assoc();
+ ?>			
+				<div class="col-md-7 col-md-offset-5 margintop10 marginbottom10 h4">Total Price : <?php echo number_format($row["TotalPrice"]);?> Bath</div>
+				<?php }} ?>
+				<div class="clearfix"></div>
+			<?php 
+				if(isset($_SESSION['username'])&&isset($_SESSION['status'])){
+					if($_SESSION['status']=="user"){
+						$_SESSION['username'] = $username;
+				$query = "SELECT * FROM userdetails WHERE user = '$username'";
+				$result = $connection->query($query);
 
+					if ($result->num_rows > 0) {
+					$row = $result -> fetch_assoc();
+				}}}
+			 ?>
+				<form action="index.php" method="post" class="margintop5p marginbottom5p">
+					<div class="form-group margintop10 ">	
+						<input type="radio" name="address" value="<?php $row['address']; ?>" class="col-md-2">ORIGINAL ADDRESS<br>
+					</div>
+					<div class="clearfix"></div>
 					<div class="form-group margintop10">
-					<input class="col-md-2" type="radio" name="address" value="newaddress"> <input type="text" style="height: 50px;" name="textnewaddress" placeholder="New Address" class="col-md-10" />
-				</div>
-			</div>
+						<input class="col-md-2" type="radio" name="address" value="newaddress"> <input type="text" style="height: 50px;" name="textnewaddress" placeholder="New Address" class="col-md-10" />
+					</div>
+					<div class="clearfix"></div>
+					<div class="form-group margintop5p">
+						<input type="submit" name="checkout" value="Checkout" class="col-md-4 btn buttonsubmit btn-dark col-md-offset-4">
+					</div>
+					<div class="clearfix"></div>
+			</form>
+			
 		</div>
 	</aside>
 	
