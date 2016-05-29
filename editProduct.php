@@ -22,7 +22,7 @@ session_start();
  	<?php include 'navbar.php' ?>
  	
 
-		<div class="container"  id="form_newProduct">
+		<div class="container"  id="form_new	Product">
 				<form action="adminController.php" method="post" enctype="multipart/form-data">
 						<div class="col-md-6 text-newproduct">
 						<input type="hidden" name="productID" value="<?php echo $row["productID"] ?>">

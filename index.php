@@ -112,9 +112,10 @@ session_start();
 					$row = $result -> fetch_assoc();
 				}}}
 			 ?>
-				<form action="orderstatus.php" method="post" class="margintop5p marginbottom5p">
+				<form action="checkout.php" method="post" class="margintop5p marginbottom5p">
 					<div class="form-group margintop10 ">	
-						<input id="oldAddress" type="radio" name="address" value="<?php $row['address']; ?>" class="col-md-2" checked>ORIGINAL ADDRESS<br>
+						
+						<input id="oldAddress" type="radio" name="address" value="<?php echo $row['address']; ?>" class="col-md-2" checked>ORIGINAL ADDRESS<br>
 					</div>
 					<div class="clearfix"></div>
 					<div class="form-group margintop10">
@@ -128,7 +129,9 @@ session_start();
 
 
 					?>
+
 					<div class="form-group margintop5p">
+						<input type="hidden" name="username" value="<?php echo $_SESSION['username']; ?>">
 						<input type="submit" name="checkout" value="Checkout" class="col-md-4 btn buttonsubmit btn-dark col-md-offset-4">
 					</div>
 					<?php }} ?>
@@ -149,7 +152,7 @@ session_start();
 		<div class="col-xs-6 col-md-12">
 		<div class="thumbnail col-md-10 col-md-offset-1">
      		<img id="imgshowproduct" src="photos/<?php echo $row['productPic']; ?>" alt="..." class="col-md-6 col-md-offset-3">
-     	</div>
+     	</div>	
   		</div>
 		<div class="clearfix"></div>
 		<?php
@@ -179,7 +182,7 @@ session_start();
     if(isChecked) {
         $("#newAddress").prop("disabled",true); 
     } else if(!isChecked) {
-       $("#newAddress").prop("disabled",false);
+       $("#newAddress").prop({disabled:false,required:true});
     }
 
 });
@@ -188,7 +191,8 @@ session_start();
     var isChecked = this.checked;
 
     if(isChecked) {
-        $("#newAddress").prop("disabled",false); 
+        $("#newAddress").prop({disabled:false,required:true}); 
+
     } else {
        $("#newAddress").prop("disabled",true);
     }

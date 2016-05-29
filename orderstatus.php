@@ -1,5 +1,7 @@
 <?php 
+	session_start();
 	include 'config.php';
+	include 'checkout.php';
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,8 +27,8 @@
 					</tr>	
 					<?php
 
-						if ($result->num_rows > 0) {	
-							while($row = $result -> fetch_assoc()){
+							if ($result->num_rows > 0) {	
+								while($row = $result -> fetch_assoc()){
 
 						
 					?>
