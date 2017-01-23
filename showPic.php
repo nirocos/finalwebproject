@@ -15,6 +15,6 @@ include 'config.php';
  		echo 'photos/'.$row["productPic"].'';
 	}
 }
-}
+}asd
 
  ?>
